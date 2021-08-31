@@ -14,8 +14,6 @@ ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
 ENV DISTRO=${ROS2_DISTRO}
 
-
-
 RUN echo "Using ROS distro: ${ROS2_DISTRO}"
 RUN echo "Using ROS distro: ${DISTRO}"
 RUN apt-get update; apt-get -y install cmake apt-utils
@@ -27,7 +25,6 @@ RUN mkdir -p /root/smacc2_ws/src
 WORKDIR /root/smacc2_ws/src
 RUN git clone https://github.com/robosoft-ai/SMACC2.git
 
-
 WORKDIR /root/smacc2_ws
 
 # Resolve dependencies and build workspace
@@ -35,11 +32,9 @@ WORKDIR /root/smacc2_ws
 RUN rosdep install --ignore-src --from-paths src -y -r
 RUN bash -c "source /opt/ros/${DISTRO}/setup.bash; colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
-
 # source setup file then run sm_atomic
 WORKDIR /root
 #RUN bash -c "source /root/smacc2_ws/install/setup.bash; ros2 launch sm_atomic sm_atomic.launch"
-
 
 ##Beyond this point is a work in progress
 ## see https://github.com/robosoft-ai/SMACC2/blob/master/tracing.md
